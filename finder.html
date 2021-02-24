@@ -101,6 +101,11 @@
         ⚙️ Ayarlar
         </button>
           </li>
+<li class="nav-item">
+                      <button onclick="toggleDarkMode()" class="btn nav-link" >
+                        Dark Mode
+                      </button>
+                    </li>
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -115,9 +120,9 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="./Projectproposal.html">Proposal</a>
-              <a class="dropdown-item" href="https://github.com/a0m0rajab/BahisQurani">Source Code</a>
+              <a class="dropdown-item" href="https://github.com/Okuyun/Rehber">Source Code</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="../../">About me</a>            
+              <a class="dropdown-item" href="http://a0m0rajab.github.io/">About me</a>            
             </div>
           </li>
         </ul>
@@ -127,7 +132,7 @@
     <br />
 
     <div class="container">
-      <div  id="stickySearch" class="row bg-white sticky-top" style="z-index: 2;">
+      <div  id="stickySearch" class="row sticky-top" style="z-index: 2;">
         <div class="input-group">
            <input
  dir="rtl"
@@ -185,7 +190,8 @@
         
          <!-- </div> -->
         
-      </div>
+      </div>       
+       <div id="finderMessage"></div>
       <div class="row">
         <div class="col-12 table-responsive">
           <table id="dTable" class="table table-sm table-hover">
@@ -360,26 +366,37 @@
           </button>
         </div>
         <div class="modal-body">
-        <span id=fontAr>font size</span>
+                              <label for="fontType">Font type</label>
+                              <select onchange="getFontType()" id="fontType" name="fontType" class="select col-3">
+                                <option value="Zekr" selected>Zekr</option>
+                                <option value="ZekrBold">ZekrBold</option>
+                                <option value="me_quran">me quran</option>
+                              </select>
+                              <hr>
+        <span id=fontAr>font size</span> <br>
+
+                  <button type="button" class="btn btn-outline-primary" onclick="changeFont(`arabic`,5)">+</button>
+
+        <button type="button" onclick="setFontToDefault('arabic',20)" class="btn btn-outline-warning" >Default</button>
+          <button type="button" class="btn btn-outline-primary" onclick="changeFont(`arabic`,-5)">-</button>
+
         <br>
         <div class="container input-group">
-          <button type="button" class="btn" onclick="changeFont(`arabic`,5)">+🗚</button>
           <div class="btn">
             <p class="arabic input-form">
               <great>بِسْمِ ٱللَّهِ</great> ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
             </p>
           </div>
-          <button type="button" class="btn" onclick="changeFont(`arabic`,-5)">🗛-</button>
         </div>
       
         
         <br>
-        <span id=txtTrans>Translation:</span>
+        <span id=txtTrans>Translation:</span><br>
+        <button type="button" class="btn btn-outline-primary" onclick="changeFont(`x`,5)">+</button>
+        <button type="button" onclick="setFontToDefault('x',20)" class="btn btn-outline-warning">Default</button>
+        <button type="button" class="btn btn-outline-primary" onclick="changeFont(`x`,-5)">-</button>
         <br>
-        <button type="button" class="btn" onclick="changeFont(`x`,5)">+🗚</button>
         <p class="translation">Rahman ve Rahim olan Allah'ın adıyla:</p>
-        <button type="button" class="btn" onclick="changeFont(`x`,-5)">🗛-</button>
-
         <br>
 
       
