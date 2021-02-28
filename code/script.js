@@ -2,7 +2,7 @@
  * The base url of the data from project to read them.
  * 
  */
-let dataUrl = "./data/"
+let dataUrl = "https://a0m0rajab.github.io/BahisQurani/data/"
     /**
      * Data JSON to read them from it.
      * Need to add: Translation for other languages.

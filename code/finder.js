@@ -136,8 +136,8 @@ function createRow(sn, an, word = "") {
     tr.appendChild(td)
     let tp = createSpan()
     tp.innerHTML = shrink(loc, 100)
-    // add here for great function.
-    // SpanAddEventListener(tp,sn,an)
+        // add here for great function.
+        // SpanAddEventListener(tp,sn,an)
     td.appendChild(tp)
     tp.className = "translation"
 
@@ -146,7 +146,7 @@ function createRow(sn, an, word = "") {
     arTd.scope = "col"
     arTd.className = "text-right w-50"
     arTd.dir = "rtl"
-    // need to change the span thingy as well
+        // need to change the span thingy as well
     let arP = createArPar();
 
     // if (/[\u064B-\u0652]/.test(word)) {
@@ -168,15 +168,15 @@ function createRow(sn, an, word = "") {
     let span = document.createElement("span");
     span.className = "shrinkArabic";
     span.innerHTML = shrink(loc)
-    // great function
-    // SpanAddEventListener(span,sn,an) //1,word)
+        // great function
+        // SpanAddEventListener(span,sn,an) //1,word)
     arP.appendChild(span)
 
     span = document.createElement("span");
     span.className = "fullText";
     span.innerHTML = loc
-    // great function
-    // SpanAddEventListener(span,sn,an)//,1,word)
+        // great function
+        // SpanAddEventListener(span,sn,an)//,1,word)
     arP.appendChild(span)
 
     // TODO: if oneline: add controler
@@ -264,22 +264,22 @@ function subArrayIndexes(master, sub) {
         for (let index of matched_index) {
             for (let [j, element] of sub.entries()) {
                 let masterWord = master[j + index];
-                if (!masterWord || !masterWord.includes(element)) {
+                if ( !masterWord || !masterWord.includes(element)) {
                     matched_index = removeElement(matched_index, index)
                     break;
                 }
             }
         }
     } catch (error) {
-        console.error(error, matched_index)
+        console.error(error,matched_index)
     }
-
+   
     return matched_index;
 }
 
 function removeElement(arr, value) {
     // https://love2dev.com/blog/javascript-remove-from-array/
-    return arr.filter(function (ele) {
+    return arr.filter(function(ele) {
         return ele != value;
     });
 
@@ -299,7 +299,7 @@ function allOccurence(array, element) {
 
 function allOccurenceSub(array, element) {
     let indices = [];
-    array.forEach(function (item, index) {
+    array.forEach(function(item, index) {
         // localeCompare to use.
         if (item.indexOf(element) !== -1) {
             indices.push(index)
@@ -341,8 +341,8 @@ function SpanAddEventListener(span, sn, an, cnt, word) {
         let cv = (sn + 1) + ":" + (an + 1);
         // if(cnt) cv += "&w=" + toBuckwalter(word)+"";
         console.log("event listern added to", span.children[0].innerText)
-        // span.children[0].onclick=function (){console.log("hello")}
-        span.children[0].addEventListener("click", function (e) {
+            // span.children[0].onclick=function (){console.log("hello")}
+        span.children[0].addEventListener("click", function(e) {
             console.log("clicked")
             openIqra(cv)
         });
@@ -372,7 +372,7 @@ function shrink(text, number = 5) {
      * post+x, start from 0
      */
     let searchQue = document.getElementById("searchQue")
-    if (!!searchQue) {
+    if(!!searchQue){
         number = number + (searchQue.value.split(" ").length);
     }
     text = text.split(" ");
@@ -399,18 +399,10 @@ function shrink(text, number = 5) {
 let dataArr, wordCt;
 // arr is lsit of aya and sura, searched word.
 function createTable(arr, word) {
-    if (arr.length == 0) { document.getElementById("PaginationMenu").hidden = true; return }; // empty array. TODO: can make a message for the user to show that its not found
+    if(arr.length==0) {   document.getElementById("PaginationMenu").hidden = true; return} ; // empty array. TODO: can make a message for the user to show that its not found
     dataArr = arr;
     wordCt = word;
-    let message = arr.length
-    dTable.hidden = false
-    if (message == 0) {
-        message = "bulunmadi"
-        dTable.hidden = "true"
-        console.log(dTable, "Data table")
-    }
-    finderMessage.innerText = ""
-    wordNumber.innerText = message//+ parseInt(wordNumber.innerText)
+    wordNumber.innerText = arr.length //+ parseInt(wordNumber.innerText)
     document.title += " " + wordNumber.innerText;
     // arr.forEach((e, i) => {
     //     if (i > 100) { console.log(i); return; } else {
@@ -431,9 +423,9 @@ function createTable(arr, word) {
  * @param {int} num the desired page number
  */
 function paginationControl(num) {
-    /**
-     * Clear table
-     */
+   /**
+    * Clear table
+    */
     let element = document.getElementById("dTable").getElementsByTagName('tbody')[0];
     element.innerHTML = ""
     /**
@@ -497,6 +489,16 @@ function getPages() {
     return Math.ceil(dataArr.length / verseInPage) - 1;
 }
 
+function setTotalVerses() {
+    verseInPage = document.getElementById("dataAmount").value
+    if (verseInPage == "All") {
+        verseInPage = dataArr.length - 1;
+    } else {
+        verseInPage = parseInt(verseInPage)
+    }
+    paginationControl(0)
+}
+
 function paginationPrev() {
     paginationControl(dataIndex - 1)
 }
@@ -509,32 +511,13 @@ function paginationLast() {
     paginationControl(getPages())
 }
 
-function getFontType() {
-    let fontType = document.getElementById("fontType").value
-    getCSSRule(".arabic").style.fontFamily = `${fontType}, serif`
-    updateSettings("fontType", fontType)
-}
-
-function setFontType(type) {
-    document.getElementById("fontType").value = type
-    getFontType()
-}
-
-function setVersePerPage(mode, verse) {
+function setVersePerPage(mode) {
     if (mode == 0) dataIndex = 0; // if dataindex it will go to the last page, now it will reset.
     let controller = document.getElementById("dataAmount").value
-    if (verse) {
-        document.getElementById("dataAmount").value = verse
-        controller = verse;
-    }
     let lastPageButton = document.getElementById("lastPage")
     verseInPage = parseInt(controller);
-    if (dataArr) {
-        lastPageButton.innerText = getPages() + 1;
-        paginationControl(dataIndex)
-    }
-    updateSettings("verse_per_page", controller)
-    return controller
+    lastPageButton.innerText = getPages() + 1;
+    paginationControl(dataIndex)
 }
 
 function paginationSet() {
@@ -579,6 +562,7 @@ function search(word, arr = suraSr) {
             // aya = normlisation(aya)
             // working :) -- the insan error is caused by the RegEx
             let locs = removeOddChar(aya).indexOf(removeOddChar(word.toLowerCase()))
+
             if (locs !== -1) {
                 loc.push([i, j, locs])
             }
@@ -692,9 +676,9 @@ function find(word = "") {
 }
 
 function findAction(word = "") {
-    let [h, type, arabic] = readHash()
+    let [h,type,arabic] = readHash()
     if (word.length <= 0) return;
-    if (searchQue.value == arabic) return;
+    if(searchQue.value == arabic ) return;
     clearTable();
     // already triggered when the hash changed, they are connected together 
     // serachedWordTable(word);
@@ -722,15 +706,13 @@ function serachedWordTable(word) {
         [word, wordLst] = mujamList(word)
         wordLst[1] = [...wordLst];
     }
-    dTable.hidden = "true"
-    finderMessage.innerText = "Bulunmadı"
+
     document.title = "Kuran Rehber: Finder - " + word;
-    wordNumber.innerText = "Bulunmadı";
+    wordNumber.innerText = 0;
     let words = word.split("+")
     words.forEach(e => {
         word = e;
-        // timer("Results in ", () => find(word))
-        find(word)
+        timer("Results in ", () => find(word))
         createTable([...wordLst[1]], word)
     });
     menuFn();
@@ -774,11 +756,11 @@ function navigatorToString() {
 
 function removeElementByID(elementID) {
     let el = document.getElementById(elementID);
-    while (el != null) {
+    while (el != null ) {
         el.parentNode.removeChild(el);
         el = document.getElementById(elementID);
     }
-
+    
 }
 
 function submitFeedBack() {
@@ -825,7 +807,7 @@ function addSuggestions(wordList) {
         opt = document.createElement("option")
         opt.className = "arabic"
         opt.value = searchQue.value + "" + e
-        // suggestions.appendChild(opt)
+            // suggestions.appendChild(opt)
         html += opt.outerHTML;
     })
     suggestions.innerHTML = html;
@@ -843,24 +825,24 @@ function rootToFinder(root) {
     refs.forEach(e => refSet.add(e.index));
     let rootArr = [];
     refSet.forEach(e => {
-        let [c, v] = toCV(e)
-        rootArr.push([c - 1, v - 1])
-    })
-    // wordLst[0] = [];
-    // wordLst[1] = rootArr
+            let [c, v] = toCV(e)
+            rootArr.push([c - 1, v - 1])
+        })
+        // wordLst[0] = [];
+        // wordLst[1] = rootArr
     createTable(rootArr, root)
 }
-function readHash() {
+function readHash(){
     let h = decodeURI(location.hash);
     // console.log("hashChanged...")
     let type = h[1];
     h = h.slice(3);
     let arabic = h.replace(/%20/g, " ");
-    return [h, type, arabic]
+    return [h,type,arabic]
 }
 
 function hashChanged() {
-    let [h, type, arabic] = readHash()
+  let [h,type,arabic] = readHash()
     switch (type) {
         case "b":
             arabic = toArabic(decodeURI(arabic));
@@ -884,12 +866,10 @@ function hashChanged() {
     // arabic=toArabic(decodeURI(arabic)); // move the decode function to BuckWalter code... better approach
     if (arabic.length <= 0) {
         console.log("arabic length", arabic.length)
-        return;
-    }
+        return;}
     if (suraTr == undefined) {
         console.log("suraTr undefeined")
-        return
-    }; // a little lovely bug.. faster way to solve it lol
+        return}; // a little lovely bug.. faster way to solve it lol
     // if (arabic == searchQue.value) {
     //     console.log("Search value and arabic are equal")
     //     return};
@@ -906,7 +886,7 @@ function setHash(word, type) {
     }
     if (type == "r") e = "r=" + toBuckwalter(word);
     location.hash = e //toBuckwalter(e);
-    // console.trace();
+        // console.trace();
 }
 /**
  * Ininitlise finder by adding serachbar keyup event (onsubmit)
@@ -923,17 +903,18 @@ function setHash(word, type) {
 async function initFinder() {
     let h = decodeURI(location.hash);
     let type = h[1];
-    if (type == "r") {
+    if(type == "r"){
         await loadMujam();
     }
     console.log("Finder started...")
-    searchQue.addEventListener("keyup", function (event) {
+    searchQue.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
             event.preventDefault();
             findAction(searchQue.value)
         }
     });
     window.addEventListener("hashchange", hashChanged);
+
     if (storageAvailable("localStorage")) {
         if (window.localStorage.settings === undefined) {
             initLocalStorage();
@@ -945,17 +926,16 @@ async function initFinder() {
     hashChanged();
     menuFn();
     initPagination();
-    if (type != "r") {
-        await loadMujam();
-    }
+    if(type != "r"){
+       await loadMujam();
+     }
 }
-async function loadMujam() {
+async function loadMujam(){
     let date = new Date()
     let p = await initMujam();
-    console.log("Mujam load time", new Date() - date)
+    console.log("Mujam load time",new Date() - date)
     return p
 }
-
 
 function changeColour(col) {
     changeGreatColour(col)
@@ -965,17 +945,10 @@ function changeColour(col) {
 function changeGreatColour(col) {
     document.getElementById("greatColour").value = col;
     getCSSRule("great").style.backgroundColor = col;
+
 }
 
-function setFontSize(language, size, rule, update) {
-    if (!rule) {
-        var { rule, update } = getFontRule(language)
-    }
-    rule.style.fontSize = size + "px"
-
-    updateSettings(update, size)
-}
-function getFontRule(language) {
+function changeFont(language, size) {
     //console.log(language,size)
     let rule, update = "translation";
     if (language == "arabic") {
@@ -986,22 +959,15 @@ function getFontRule(language) {
         //.translation 
         rule = getCSSRule(".translation")
     }
-    return { rule, update }
-}
-function changeFont(language, size) {
-    let { rule, update } = getFontRule(language)
     let old = parseInt(rule.style.fontSize);
-    setFontSize(update, old + size, rule, update)
-}
-function setFontToDefault(language, size) {
-    let { rule, update } = getFontRule(language)
-    setFontSize(update, size, rule, update)
+    rule.style.fontSize = old + size + "px"
+    updateSettings(update, old + size)
 }
 
 async function loadTransF(n = 3) {
     await loadTrans(n.toString())
-    // clearTable();
-    // toCheck...
+        // clearTable();
+        // toCheck...
     // if (!location.hash.includes("r=")) findAction(searchQue.value);
     // else hashChanged();
     // can be added from the url? - or even modified to be more generic by having data collection for it to create the whole thingy, like the tefsir and even the list... 
@@ -1015,7 +981,7 @@ async function loadTransF(n = 3) {
 }
 
 function getTefsirText(n) {
-    let tefsir = ["تفسير الجلالين", "تفسير الميسر", "Türkçe: Diyanet Meali", "English: Ahmed Ali", "Türkçe: Elmalılı Hamdi Yazır", "English: Abdullah Yusuf Ali", "French"]
+    let tefsir = ["تفسير الجلالين", "تفسير الميسر", "Türkçe: Diyanet Meali", "English: Ahmed Ali", "Türkçe: Elmalılı Hamdi Yazır", "English: Abdullah Yusuf Ali","French"]
     return tefsir[n - 1];
 }
 
@@ -1031,14 +997,14 @@ function openMeali(cv) {
 }
 // cv = chapter verses C:V 
 function openIqra(cv) {
-    let link = "/Kuran/reader.html#v=" + cv;
+    let link = "https://maeyler.github.io/Kuran/reader.html#v=" + cv;
     window.open(link, "iqra")
     lastOne = "iqra";
     warpLast()
 }
 
 function openSimi(cv) {
-    let link = "/Rehber/simi#" + cv;
+    let link = "https://a0m0rajab.github.io/BahisQurani/simi#" + cv;
     window.open(link, "simi")
     lastOne = "simi";
     warpLast()
@@ -1155,7 +1121,7 @@ function resetTD(e) {
 function addShowFunction() {
     if (typeof showHideFull !== "undefined") {
         for (let x of showHideFull) {
-            x.onclick = function () { toggleShow(x) }
+            x.onclick = function() { toggleShow(x) }
         }
     }
 }
@@ -1171,7 +1137,7 @@ function toggleOneline() {
     // oneline =!oneline;
     // oneLineShow(oneline)
     updateSettings("oneline", oneline)
-    // go to check this for future fix:https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
+        // go to check this for future fix:https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
 }
 /**
  * set the display state and show the table based on it.
@@ -1204,7 +1170,7 @@ function displayState(num) {
 
 function translationStyle(text) {
     getCSSRule(".tableTranslation").style.display = text
-    // go to check this for future fix:https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
+        // go to check this for future fix:https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
 }
 
 function oneLineShow(bool) {
@@ -1235,7 +1201,7 @@ function checkButton() {
         //    if(x.innerText == "-"){
         //    x.click();
         resetTD(x)
-        //    }
+            //    }
     }
     // other approach: document.querySelectorAll("span.fullText") 
 }
@@ -1265,15 +1231,15 @@ function storageAvailable(type) {
         return true;
     } catch (e) {
         return e instanceof DOMException && (
-            // everything except Firefox
-            e.code === 22 ||
-            // Firefox
-            e.code === 1014 ||
-            // test name field too, because code might not be present
-            // everything except Firefox
-            e.name === 'QuotaExceededError' ||
-            // Firefox
-            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+                // everything except Firefox
+                e.code === 22 ||
+                // Firefox
+                e.code === 1014 ||
+                // test name field too, because code might not be present
+                // everything except Firefox
+                e.name === 'QuotaExceededError' ||
+                // Firefox
+                e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
             // acknowledge QuotaExceededError only if there's something already stored
             (storage && storage.length !== 0);
     }
@@ -1291,11 +1257,11 @@ function normlisation(text) {
 }
 
 function initLocalStorage() {
-    let keys = ["arabic", "translation", "colour", "source", "oneline", "lastOne", "lang", "verse_per_page", "fontType"]
+    let keys = ["arabic", "translation", "colour", "source", "oneline", "lastOne", "lang"]
     let arabicSize = parseInt(getCSSRule(".arabic").style.fontSize);
     let translationSize = parseInt(getCSSRule(".translation").style.fontSize);
     let colour = "#ffff00";
-    let values = [arabicSize, translationSize, colour, 5, oneline, lastOne, "1", 10, "Zekr"]
+    let values = [arabicSize, translationSize, colour, 5, oneline, lastOne, "1"]
     for (let i = 0; i < keys.length; i++) {
         updateSettings(keys[i], values[i])
     }
@@ -1340,19 +1306,15 @@ function loadSettings() {
     if (storageAvailable('localStorage')) {
         settings = JSON.parse(localStorage.getItem('settings'))
         changeColour(settings.colour)
-        setFontSize("arabic", settings.arabic)
-        setFontSize("translation", settings.translation)
-        setVersePerPage(undefined, settings.verse_per_page)
+        changeFont("arabic", 0)
+        changeFont("x", 0)
         lastOne = settings.lastOne;
         language(settings.lang)
         showState(settings.dstate)
         displayState(settings.dstate)
-        setFontType(settings.fontType)
         return loadTransF(settings.source);
     }
 }
-
-
 
 function showState(state) {
     switch (state) {
@@ -1372,7 +1334,7 @@ const SR = new webkitSpeechRecognition()
 
 function SearchVoice(language) {
     let speechLang = "tr-TR"
-    // TODO: tefsir source is not defined -- check form local storage.
+        // TODO: tefsir source is not defined -- check form local storage.
     switch (settings.source) {
         case 3:
         case 5:
@@ -1512,7 +1474,7 @@ function menuFn() {
     function select() {
         let s = getSelection().toString().trim()
         if (s) return s
-        // else alert("Önce Arapça bir kelime seçin")
+            // else alert("Önce Arapça bir kelime seçin")
     }
 
     function keyPress(e) {
@@ -1592,49 +1554,12 @@ function menuFn() {
             case 3: // search for root
                 let root = wordToRoot.get(toBuckwalter(sel))
                 setHash(toArabic(root), "r")
-                // findAction(rootToWords(root))
+                    // findAction(rootToWords(root))
                 break;
         }
         toggleMenu("hide");
     });
     addContextMenu();
-}
-
-function setCustomMode(bgcolor, color) {
-    let rule = getCSSRule(".custom-mode")
-    rule.style.color = color
-    rule.style["background-color"] = bgcolor
-}
-function toggleMode(mode) {
-    let list = ['#PaginationMenu',
-        "#pageNext",
-        ".arabic", "body",
-        "#settingsModel > div > div",
-        "#choosenPage", "#lastPage",
-        "#firstPage", "#stickySearch",
-        , "#pagePrev", "#settingsModel", "#dTable",
-        "#settingsModel > div > div > div.modal-body > div > div > p",
-        "#FeedBackModal > div > div", "#THtext"]
-    list.forEach(e => {
-        document.querySelector(e).classList.toggle(mode)
-
-    })
-}
-function toggleCustomMode() {
-    toggleMode("custom-mode")
-}
-function toggleDarkMode() {
-    toggleMode("dark-mode")
-    document.querySelector("#dTable").classList.toggle("table-dark")
-    let highlight = getCSSRule("great");
-    if (highlight.style["color"] != "white") {
-        highlight.style["background-color"] = "#343a40"
-        highlight.style["color"] = "white"
-    } else {
-        highlight.style["background-color"] = "yellow"
-        highlight.style["color"] = "black"
-    }
-
 }
 /**
  * Clear HTML table without touching the headers.

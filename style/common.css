@@ -1,17 +1,10 @@
 .arabic {
-    font: 20px Zekr, serif;
-    line-height: 1.8;
+    
+    font: 20px me_quran, serif;
 }
 
 .container {
     max-width: 95vw;
-}
-
-#finderMessage{
-    justify-content: center;
-    display: flex;
-    font-size: 500%;
-    color: red;
 }
 
 @font-face {
@@ -46,24 +39,9 @@
     src: url("./Hafs-ver13/UthmanicHafs1\ Ver13.otf");
 }
 
-@font-face {
-    font-family: Zekr;
-    src: url("./ZEKRQURAN.TTF");
-}
-
-@font-face {
-    font-family: ZekrBold;
-    src: url("./ZEKRQURANBOLD.TTF");
-}
 
 
-body {
-    background-color: #f9f4e8;
-}
 
-.sticky-top {
-        background-color: #f9f4e8;
-}
 
 great {
     margin-right: -1;
@@ -84,18 +62,13 @@ great {
     display: table-cell;
 }
 
-.table-responsive{
-    padding-left: 0px;
-    padding-right: 0px;
-    overflow: hidden;
-}
-
 .shrinkArabic {
     display: none;
     white-space: nowrap;
     text-overflow: ellipsis;
-    max-width: 90vw;
-    overflow: hidden; 
+    max-width: 80vw;
+    overflow-x: hidden;
+    /* overflow-x: scroll; */
 }
 
 #showHideFull {
@@ -137,14 +110,3 @@ great {
     border-top-width: 0px!important;
     z-index: 100;
   }
-
-
-.dark-mode {
-  background-color: black;
-  color: white;
-}
-
-.custom-mode {
-  background-color: rgb(18, 16, 143);
-  color: rgb(130, 153, 3);
-}
