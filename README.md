@@ -1,3 +1,8 @@
+# The project is Archived as the program that is resulted of the Bachelor Thesis work.
+#  you can access to the new project from: https://github.com/Okuyun/
+
+* * * * *
+
 # BahisQurani
 
 A simple mobile and user friendly quran reader.
